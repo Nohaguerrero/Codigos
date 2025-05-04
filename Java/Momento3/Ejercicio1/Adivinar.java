@@ -8,11 +8,9 @@ public class Adivinar {
         adivinarNumero(scanner);
         scanner.close();
     };
-
     public static void Intrucciones(){
         System.out.println("Adivina el numero que tiene la aplicacion, ingresa cuantas veces sea necesario hasta que adivines");
     }
-
     public static void adivinarNumero(Scanner scanner) {
         Random random = new Random();
         int numeroSecreto = random.nextInt(10)+1;

@@ -29,8 +29,7 @@ public class Edades {
         System.out.println("Es mayor de edad");
         }else{
         System.out.println("Es menor de edad");
-        }
-            
+        } 
     }
 }
 }
