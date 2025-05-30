@@ -1,35 +1,31 @@
-// Unica clase para el Reto 1
 import java.util.Scanner;
 
 public class RegistroPuntuaciones {
-// Usaremos arrays de tamaño fijo para almacenar nombres y puntuaciones.
-    // Suponemos un máximo de 5 puntuaciones altas.
+
     static final int MAX_PUNTUACIONES = 5;
     String[] nombresJugadores = new String[MAX_PUNTUACIONES];
     int[] puntuaciones = new int[MAX_PUNTUACIONES];
-    int contadorActual = 0; // Para saber cuántas puntuaciones hemos
+    int contadorActual = 0; // ✅ ERROR CORREGIDO: línea mal cortada y con comentario desplazado
 
-    // Método para agregar una nueva puntuación
-    // No se preocupará por ordenarlas, solo por registrarlas si hay espacio.
     public void agregarPuntuacion(String nombre, int puntaje) {
         if (contadorActual < MAX_PUNTUACIONES) {
-            nombresJugadores[contadorActual] = nombre;
-            puntuaciones[contadorActual] = puntaje; // Error: Falta ; en la línea anterior
-            contadorActual++; // Error: Falta ;
+            nombresJugadores[contadorActual] = nombre; // ✅ ERROR: faltaba el punto y coma ;
+            puntuaciones[contadorActual] = puntaje;
+            contadorActual++; // ✅ ERROR: faltaba ;
             System.out.println("Puntuación para " + nombre + " registrada.");
-            } else {
-            System.out.println("Registro lleno. No se pudo agregar la puntuación de " + nombre); // Error: 'nomre' en lugar de 'nombre'
+        } else {
+            System.out.println("Registro lleno. No se pudo agregar la puntuación de " + nombre); // ✅ ERROR: 'nomre' mal escrito
         }
+        // ✅ Se puede dejar sin return, ya que es un método void
     }
 
-    // Método para mostrar todas las puntuaciones registradas
     public void mostrarPuntuaciones() {
         System.out.println("\n--- Puntuaciones Más Altas ---");
         if (contadorActual == 0) {
             System.out.println("Aún no hay puntuaciones registradas.");
-            return; // Error: Falta 'return;' si se quiere salir aquí, o quitar el return de agregarPuntuacion
+            return; // ✅ ERROR: Faltaba este return si no hay datos
         }
-        for (int i = 0; i < contadorActual; i++) { // Error: Condición de bucle incorrecta (debería ser < contadorActual)
+        for (int i = 0; i < contadorActual; i++) { // ✅ ERROR: era <=, lo cual daba IndexOutOfBounds
             System.out.println(nombresJugadores[i] + ": " + puntuaciones[i] + " puntos");
         }
         System.out.println("---------------------------");
@@ -38,8 +34,8 @@ public class RegistroPuntuaciones {
     public static void main(String[] args) {
         RegistroPuntuaciones registro = new RegistroPuntuaciones();
         Scanner teclado = new Scanner(System.in);
-        String opcionUsuario = "0"; // Error: debería ser String para comparar con "3"
-    
+        String opcionUsuario = "0"; // ✅ ERROR: estaba declarado como int en el código fuente original
+
         while (!opcionUsuario.equals("3")) {
             System.out.println("\nSistema de Puntuaciones Arcade");
             System.out.println("1. Agregar Puntuación");
@@ -49,27 +45,29 @@ public class RegistroPuntuaciones {
             opcionUsuario = teclado.nextLine();
 
             switch (opcionUsuario) {
-                case "1":
-                    System.out.print("Nombre del jugador: ");
-                    String nombre = teclado.nextLine();
-                    System.out.print("Puntaje obtenido: ");
-                    int puntaje;
-                    try {
-                        puntaje = Integer.parseInt(teclado.nextLine());
-                    } catch (NumberFormatException e) {
-                        System.out.println("Puntaje inválido. Debe ser un número entero.");
-                        break;
+                case "1": // ✅ ERROR: era int, debía ser String con comillas
+                    if (registro.contadorActual < MAX_PUNTUACIONES) {
+                        System.out.print("Nombre del jugador: ");
+                        String nombreJugador = teclado.nextLine();
+                        System.out.print("Puntuación obtenida: ");
+                        int puntajeObtenido = teclado.nextInt();
+                        teclado.nextLine(); // Limpiar buffer
+                        registro.agregarPuntuacion(nombreJugador, puntajeObtenido);
+                    } else {
+                        System.out.println("El registro de puntuaciones está lleno.");
                     }
-                    registro.agregarPuntuacion(nombre, puntaje);
                     break;
+
                 case "2":
                     registro.mostrarPuntuaciones();
                     break;
+
                 case "3":
-                    System.out.println("¡Gracias por usar el sistema!");
+                    System.out.println("Gracias por jugar!");
                     break;
+
                 default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                    System.out.println("Opción no válida. Intente nuevamente."); // ✅ ERROR: faltaba el punto y coma ;
             }
         }
 
